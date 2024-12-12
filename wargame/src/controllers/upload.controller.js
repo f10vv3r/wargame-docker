@@ -29,7 +29,7 @@ const upload = multer({
     },
 });
 
-// 압축 해제 함수 (adm-zip 사용)
+// 압축 해제 함수
 async function extractZipFile(zipPath, outputDir) {
     return new Promise((resolve, reject) => {
         try {
