@@ -1,3 +1,5 @@
+version: "3.9"
+
 services:
   web:
     build: .
@@ -5,7 +7,9 @@ services:
       - "8000:8000"
     volumes:
       - .:/wargame
-      - /wargame/node_modules
+      - ./uploads:/wargame/uploads
+      - ./src/workspace:/wargame/src/workspace
+      - /var/run/docker.sock:/var/run/docker.sock
     depends_on:
       - db
     networks:
@@ -14,7 +18,7 @@ services:
   db:
     image: mysql:8.0.40
     environment:
-      MYSQL_ROOT_PASSWORD: chlgustjr05@
+      MYSQL_ROOT_PASSWORD: root
       MYSQL_DATABASE: wargame
     volumes:
       - db_data:/var/lib/mysql
@@ -22,6 +26,8 @@ services:
     ports:
       - "3307:3306"
     restart: always
+    networks:
+      - app-network
 
   nginx:
     image: nginx:latest
@@ -30,6 +36,8 @@ services:
       - "80:80"
     volumes:
       - ./nginx.conf:/etc/nginx/nginx.conf
+      - ./uploads:/wargame/uploads
+      - ./src/workspace:/wargame/src/workspace
     depends_on:
       - web 
     networks:
