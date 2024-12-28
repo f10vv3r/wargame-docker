@@ -1,8 +1,0 @@
-{
-    "ignore": [
-      "upload/*",
-      "workspace/*",
-      "node_modules/*"
-    ]
-}
-  
